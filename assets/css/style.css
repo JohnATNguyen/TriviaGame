@@ -1,0 +1,15 @@
+.container-fluid {
+	background-image: url("../images/b257aee9-1ccc-4a68-8361-17bd39a3a787.jpg");
+}
+
+#centerbox {
+	border: 1px solid black;
+	text-align: center;
+	float: none;
+	margin-top: 2%;
+	margin-bottom: 2%;
+}
+
+#stuff {
+	font-family: "Comic Sans MS";
+}

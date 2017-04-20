@@ -55,16 +55,16 @@ function main() {
 				</div>
 				<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
 					<div id="0" class="answerDiv row center-block">
-						<h1><span class="answerText">A) ${answers[answers.length - (answers.length)]}</span></h1>
+						<h1>A) <span class="answerText">${answers[answers.length - (answers.length)]}</span></h1>
 					</div>
 					<div id="1" class="answerDiv row center-block">
-						<h1><span class="answerText">B) ${answers[answers.length - (answers.length - 1)]}</span></h1>
+						<h1>B) <span class="answerText">${answers[answers.length - (answers.length - 1)]}</span></h1>
 					</div>
 					<div id="2" class="answerDiv row center-block">
-						<h1><span class="answerText">C) ${answers[answers.length - (answers.length - 2)]}</span></h1>
+						<h1>C) <span class="answerText">${answers[answers.length - (answers.length - 2)]}</span></h1>
 					</div>
 					<div id="3" class="answerDiv row center-block">
-						<h1><span class="answerText">D) ${answers[answers.length - (answers.length - 3)]}</span></h1>
+						<h1>D) <span class="answerText">${answers[answers.length - (answers.length - 3)]}</span></h1>
 					</div>				
 				</div>
 			`);
@@ -82,10 +82,10 @@ function main() {
 					</div>
 					<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div id="0" class="answerDiv row center-block">
-							<h1><span class="answerText">A) ${answers[0]}</span></h1>
+							<h1>A) <span class="answerText">${answers[0]}</span></h1>
 						</div>
 						<div id="1" class="answerDiv row center-block">
-							<h1><span class="answerText">B) ${answers[1]}</span></h1>
+							<h1>B) <span class="answerText">${answers[1]}</span></h1>
 						</div>	
 					</div>
 				`);
@@ -102,10 +102,10 @@ function main() {
 					</div>
 					<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div id="0" class="answerDiv row center-block">
-							<h1><span class="answerText">A) ${answers[1]}</span></h1>
+							<h1>A) <span class="answerText">${answers[1]}</span></h1>
 						</div>
 						<div id="1" class="answerDiv row center-block">
-							<h1><span class="answerText">B) ${answers[0]}</span></h1>
+							<h1>B) <span class="answerText">${answers[0]}</span></h1>
 						</div>	
 					</div>
 				`);

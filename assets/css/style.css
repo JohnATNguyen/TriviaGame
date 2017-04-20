@@ -3,13 +3,47 @@
 }
 
 #centerbox {
-	border: 1px solid black;
+	background-color: #0bb9fe;
+	border: 2px solid black;
 	text-align: center;
 	float: none;
 	margin-top: 2%;
 	margin-bottom: 2%;
+	font-family: "Comic Sans MS";
+	padding-bottom: 1%;
 }
 
-#stuff {
-	font-family: "Comic Sans MS";
+/* #stuff {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+} */
+
+.answerDiv {
+	
 }
+
+.answerText:hover {
+	background-color: white;
+	border: 3px solid black;
+	height: 100%;
+}
+
+
+
+/* to make the background extend all the way _____________________________________________________________________________________________________ */
+
+html, body {
+	height: 100%;
+}
+
+.container-fluid {
+	min-height: 100%;
+}
+
+/* another way to make the background extending all the way
+.container-fluid {
+	position: absolute;
+	min-height: 100%;
+	min-width: 100%;
+} */

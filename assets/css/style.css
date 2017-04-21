@@ -5,7 +5,8 @@
 }
 
 #centerbox {
-	background-color: white;
+	background-color: #3f48cc;
+	color: #f8c710;
 	border: 2px solid black;
 	text-align: center;
 	float: none;
@@ -30,7 +31,7 @@
 }
 
 .answerText:hover {
-	background-color: white;
+	background-color: red;
 	border: 3px solid black;
 	height: 100%;
 }

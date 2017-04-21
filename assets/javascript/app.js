@@ -2,6 +2,8 @@ var correctAnswers = 0;
 var incorrectAnswers = 0;
 var unanswered = 0;
 
+var jeopardy = new Audio('assets/Jeopardy-theme-song.mp3');
+
 // Fisher-Yates Shuffle
 function shuffle(array) {
 	var currentIndex = array.length, temporaryValue, randomIndex;
@@ -69,7 +71,7 @@ function main() {
 
 		shuffle(answers);
 
-		var number = 10;
+		var number = 33;
 		var interval = setInterval(function() {
 			number--;
 			$('#secs').text(number);
@@ -95,12 +97,13 @@ function main() {
 							</div>
 						</div>
 					`);
-					setTimeout(main, 1000);
+					setTimeout(main, 7500);
 				});
 			}
-		}, 500);
+		}, 1000);
 
 		if (response.results[randomQuestion].type == 'multiple') {
+			jeopardy.play();
 			$('#stuff').html(`
 				<div id="info" class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
 					<div id="time" class="row">
@@ -127,6 +130,7 @@ function main() {
 			`);
 		}
 		else if (response.results[randomQuestion].type == 'boolean') {
+			jeopardy.play();
 			if (answers[0] == 'True') {
 				$('#stuff').html(`
 					<div id="info" class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -191,6 +195,8 @@ function main() {
 
 		$('.correct').on('click', function() {
 			correctAnswers++;
+			jeopardy.pause();
+			jeopardy.currentTime = 0;
 			clearInterval(interval);
 			$.ajax({
 				url: `http://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=funny+${response.results[randomQuestion].question}+${correctAnswer}`,
@@ -211,11 +217,13 @@ function main() {
 						</div>
 					</div>
 				`);
-				setTimeout(main, 1000);
+				setTimeout(main, 7500);
 			});
 		});
 		$('.incorrect').on('click', function() {
 			incorrectAnswers++;
+			jeopardy.pause();
+			jeopardy.currentTime = 0;
 			clearInterval(interval);
 			$.ajax({
 				url: `http://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=funny+${response.results[randomQuestion].question}+${correctAnswer}`,
@@ -236,7 +244,7 @@ function main() {
 						</div>
 					</div>
 				`);
-				setTimeout(main, 1000);
+				setTimeout(main, 7500);
 			});
 		});
 	});

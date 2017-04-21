@@ -26,15 +26,19 @@ function shuffle(array) {
 
 function main() {
 
+	jeopardy.pause();
+	jeopardy.currentTime = 0;
+
 	var numberOfQuestions = correctAnswers + incorrectAnswers + unanswered;
 	console.log(numberOfQuestions);
 	if (numberOfQuestions == 15) {
+		jeopardy.play();
 		$('#stuff').html(`
-			<div id="info" class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
-				<div id="time" class="row">
+			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				<div class="row">
 					<h2>You've reached 15 questions... congratulations!!!</h2>
 				</div>
-				<div id="question" class="row">
+				<div class="row">
 					<h2>Here's how you did:</h2>
 				</div>
 			</div>
@@ -46,7 +50,7 @@ function main() {
 				</div>
 			</div>
 			<div>
-				<h2>Please press <button type="button" class="btn btn-default" onclick="main()"><h1>RESTART</h1></button> to play again!</h2>
+				<h2>Please press <button type="button" class="btn btn-default" onclick="main()"><h1 class="adjustedH1">RESTART</h1></button> to play again!</h2>
 			</div>
 		`);
 		correctAnswers = 0;
@@ -77,17 +81,19 @@ function main() {
 			$('#secs').text(number);
 			if (number == 0) {
 				unanswered++;
+				jeopardy.pause();
+				jeopardy.currentTime = 0;
 				clearInterval(interval);
 				$.ajax({
 					url: `https://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=funny+${response.results[randomQuestion].question}+${correctAnswer}`,
 					method: 'GET'
 				}).done(function(response) {
 					$('#stuff').html(`
-						<div id="info" class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
-							<div id="time" class="row">
+						<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+							<div class="row">
 								<h2>Time Remaining: <span id="secs">${number}</span> Seconds</h2>
 							</div>
-							<div id="question" class="row">
+							<div class="row">
 								<h2>TIME'S UP! The correct answer is ${correctAnswer}.</h2>
 							</div>
 						</div>
@@ -105,26 +111,26 @@ function main() {
 		if (response.results[randomQuestion].type == 'multiple') {
 			jeopardy.play();
 			$('#stuff').html(`
-				<div id="info" class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
-					<div id="time" class="row">
+				<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+					<div class="row">
 						<h2>Time Remaining: <span id="secs">${number}</span> Seconds</h2>
 					</div>
-					<div id="question" class="row">
-						<h2 id="questions">${response.results[randomQuestion].question}</h2>
+					<div class="row">
+						<h2>${response.results[randomQuestion].question}</h2>
 					</div>
 				</div>
 				<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
 					<div id="0" class="answerDiv row center-block">
-						<h1><span class="answerText">A) ${answers[answers.length - (answers.length)]}</span></h1>
+						<h1 class="adjustedH1"><span class="answerText">A) ${answers[answers.length - (answers.length)]}</span></h1>
 					</div>
 					<div id="1" class="answerDiv row center-block">
-						<h1><span class="answerText">B) ${answers[answers.length - (answers.length - 1)]}</span></h1>
+						<h1 class="adjustedH1"><span class="answerText">B) ${answers[answers.length - (answers.length - 1)]}</span></h1>
 					</div>
 					<div id="2" class="answerDiv row center-block">
-						<h1><span class="answerText">C) ${answers[answers.length - (answers.length - 2)]}</span></h1>
+						<h1 class="adjustedH1"><span class="answerText">C) ${answers[answers.length - (answers.length - 2)]}</span></h1>
 					</div>
 					<div id="3" class="answerDiv row center-block">
-						<h1><span class="answerText">D) ${answers[answers.length - (answers.length - 3)]}</span></h1>
+						<h1 class="adjustedH1"><span class="answerText">D) ${answers[answers.length - (answers.length - 3)]}</span></h1>
 					</div>				
 				</div>
 			`);
@@ -133,40 +139,40 @@ function main() {
 			jeopardy.play();
 			if (answers[0] == 'True') {
 				$('#stuff').html(`
-					<div id="info" class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
-						<div id="time" class="row">
+					<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+						<div class="row">
 							<h2>Time Remaining: <span id="secs">${number}</span> Seconds</h2>
 						</div>
-						<div id="question" class="row">
-							<h2 id="questions">${response.results[randomQuestion].question}</h2>
+						<div class="row">
+							<h2>${response.results[randomQuestion].question}</h2>
 						</div>
 					</div>
 					<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div id="0" class="answerDiv row center-block">
-							<h1><span class="answerText">A) ${answers[0]}</span></h1>
+							<h1 class="adjustedH1"><span class="answerText">A) ${answers[0]}</span></h1>
 						</div>
 						<div id="1" class="answerDiv row center-block">
-							<h1><span class="answerText">B) ${answers[1]}</span></h1>
+							<h1 class="adjustedH1"><span class="answerText">B) ${answers[1]}</span></h1>
 						</div>	
 					</div>
 				`);
 			}
 			else if (answers[1] == 'True') {
 				$('#stuff').html(`
-					<div id="info" class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
-						<div id="time" class="row">
+					<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+						<div class="row">
 							<h2>Time Remaining: <span id="secs">${number}</span> Seconds</h2>
 						</div>
-						<div id="question" class="row">
-							<h2 id="questions">${response.results[randomQuestion].question}</h2>
+						<div class="row">
+							<h2>${response.results[randomQuestion].question}</h2>
 						</div>
 					</div>
 					<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div id="0" class="answerDiv row center-block">
-							<h1><span class="answerText">A) ${answers[1]}</span></h1>
+							<h1 class="adjustedH1"><span class="answerText">A) ${answers[1]}</span></h1>
 						</div>
 						<div id="1" class="answerDiv row center-block">
-							<h1><span class="answerText">B) ${answers[0]}</span></h1>
+							<h1 class="adjustedH1"><span class="answerText">B) ${answers[0]}</span></h1>
 						</div>	
 					</div>
 				`);
@@ -203,11 +209,11 @@ function main() {
 				method: 'GET'
 			}).done(function(response) {
 				$('#stuff').html(`
-					<div id="info" class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
-						<div id="time" class="row">
+					<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+						<div class="row">
 							<h2>Time Remaining: <span id="secs">${number}</span> Seconds</h2>
 						</div>
-						<div id="question" class="row">
+						<div class="row">
 							<h2>CORRECT!</h2>
 						</div>
 					</div>
@@ -230,11 +236,11 @@ function main() {
 				method: 'GET'
 			}).done(function(response) {
 				$('#stuff').html(`
-					<div id="info" class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
-						<div id="time" class="row">
+					<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+						<div class="row">
 							<h2>Time Remaining: <span id="secs">${number}</span> Seconds</h2>
 						</div>
-						<div id="question" class="row">
+						<div class="row">
 							<h2>INCORRECT! The correct answer is ${correctAnswer}.</h2>
 						</div>
 					</div>

@@ -1,3 +1,7 @@
+* {
+	box-sizing: border-box;
+}
+
 .container-fluid {
 	background-image: url("../images/N0012328051--73446.JPG");
 	background-position: center;
@@ -13,27 +17,31 @@
 	margin-top: 2%;
 	margin-bottom: 2%;
 	font-family: "Comic Sans MS";
-	padding-bottom: 1%;
+	padding-bottom: 2%;
 }
 
-#banner {
-	max-width: 100%;
+header {
+	margin-top: 2%;
 }
 
-/* #stuff {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-} */
+.adjustedH1 {
+	margin: 1% auto;
+}
 
-.answerDiv {
-	
+#stuff {
+	padding-left: 1%;
+	padding-right: 1%;
+}
+
+.answerText {
+	height: 100%;	
 }
 
 .answerText:hover {
 	background-color: red;
 	border: 3px solid black;
 	height: 100%;
+	cursor: pointer;
 }
 
 #gif {

@@ -1,4 +1,6 @@
-// https://opentdb.com/
+var correctAnswers = 0;
+var incorrectAnswers = 0;
+var unanswered = 0;
 
 // Fisher-Yates Shuffle
 function shuffle(array) {
@@ -15,22 +17,47 @@ function shuffle(array) {
 		temporaryValue = array[currentIndex];
 		array[currentIndex] = array[randomIndex];
 		array[randomIndex] = temporaryValue;
-		}
+	}
 
   return array;
 }
 
-function nextQuestion() {
-
-}
-
 function main() {
 
+	var numberOfQuestions = correctAnswers + incorrectAnswers + unanswered;
+	console.log(numberOfQuestions);
+	if (numberOfQuestions == 15) {
+		$('#stuff').html(`
+			<div id="info" class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				<div id="time" class="row">
+					<h2>You've reached 15 questions... congratulations!!!</h2>
+				</div>
+				<div id="question" class="row">
+					<h2>Here's how you did:</h2>
+				</div>
+			</div>
+			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				<div class="row">
+					<h1>Correct Answers: ${correctAnswers}</h1>
+					<h1>Incorrect Answers: ${incorrectAnswers}</h1>
+					<h1>Unanswered: ${unanswered}</h1>
+				</div>
+			</div>
+			<div>
+				<h2>Please press <button type="button" class="btn btn-default" onclick="main()"><h1>RESTART</h1></button> to play again!</h2>
+			</div>
+		`);
+		correctAnswers = 0;
+		incorrectAnswers = 0;
+		unanswered = 0;
+		return;
+	}
+
 	var answers = [];
-	var randomQuestion = Math.floor(Math.random() * 50);
+	var randomQuestion = 0; // or Math.floor(Math.random() * 50), changing the number in the opentdb url below to 50;
 
 	$.ajax({
-		url: 'https://opentdb.com/api.php?amount=50',
+		url: 'https://opentdb.com/api.php?amount=1',
 		method: 'GET'
 	}).done(function(response) {
 		correctAnswer = response.results[randomQuestion].correct_answer;
@@ -41,13 +68,43 @@ function main() {
 		}
 
 		shuffle(answers);
-		console.log (answers);
+
+		var number = 10;
+		var interval = setInterval(function() {
+			number--;
+			$('#secs').text(number);
+			if (number == 0) {
+				unanswered++;
+				clearInterval(interval);
+				$.ajax({
+					url: `http://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=funny+${response.results[randomQuestion].question}+${correctAnswer}`,
+					method: 'GET'
+				}).done(function(response) {
+					$('#stuff').html(`
+						<div id="info" class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+							<div id="time" class="row">
+								<h2>Time Remaining: <span id="secs">${number}</span> Seconds</h2>
+							</div>
+							<div id="question" class="row">
+								<h2>TIME'S UP! The correct answer is ${correctAnswer}.</h2>
+							</div>
+						</div>
+						<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+							<div class="row">
+								<img id="gif" src="${response.data.image_original_url}" alt="Powered by Giphy">
+							</div>
+						</div>
+					`);
+					setTimeout(main, 1000);
+				});
+			}
+		}, 500);
 
 		if (response.results[randomQuestion].type == 'multiple') {
 			$('#stuff').html(`
 				<div id="info" class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
 					<div id="time" class="row">
-						<h2>Time Remaining: <span id="timer">30</span> Seconds</h2>
+						<h2>Time Remaining: <span id="secs">${number}</span> Seconds</h2>
 					</div>
 					<div id="question" class="row">
 						<h2 id="questions">${response.results[randomQuestion].question}</h2>
@@ -74,7 +131,7 @@ function main() {
 				$('#stuff').html(`
 					<div id="info" class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div id="time" class="row">
-							<h2>Time Remaining: <span id="timer">30</span> Seconds</h2>
+							<h2>Time Remaining: <span id="secs">${number}</span> Seconds</h2>
 						</div>
 						<div id="question" class="row">
 							<h2 id="questions">${response.results[randomQuestion].question}</h2>
@@ -94,7 +151,7 @@ function main() {
 				$('#stuff').html(`
 					<div id="info" class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div id="time" class="row">
-							<h2>Time Remaining: <span id="timer">30</span> Seconds</h2>
+							<h2>Time Remaining: <span id="secs">${number}</span> Seconds</h2>
 						</div>
 						<div id="question" class="row">
 							<h2 id="questions">${response.results[randomQuestion].question}</h2>
@@ -122,25 +179,27 @@ function main() {
 			}
 		}
 		else if (response.results[randomQuestion].type == 'boolean') {
-			if (answers[0] == 'True') {
+			if (correctAnswer == 'True') {
 					$('#0').addClass('correct');
 					$('#1').addClass('incorrect');		
 			}
-			else if (answers[1] == 'True') {
+			else if (correctAnswer == "False") {
 					$('#0').addClass('incorrect');
 					$('#1').addClass('correct');					
 			}
 		}
 
 		$('.correct').on('click', function() {
+			correctAnswers++;
+			clearInterval(interval);
 			$.ajax({
-				url: `http://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=${response.results[randomQuestion].question}+${correctAnswer}`,
+				url: `http://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=funny+${response.results[randomQuestion].question}+${correctAnswer}`,
 				method: 'GET'
 			}).done(function(response) {
 				$('#stuff').html(`
 					<div id="info" class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div id="time" class="row">
-							<h2>Time Remaining: <span id="timer">TIME LEFT</span> Seconds</h2>
+							<h2>Time Remaining: <span id="secs">${number}</span> Seconds</h2>
 						</div>
 						<div id="question" class="row">
 							<h2>CORRECT!</h2>
@@ -148,22 +207,24 @@ function main() {
 					</div>
 					<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="row">
-							<div><img src="${response.data.image_original_url}" alt="Powered by Giphy"></div>
+							<img id="gif" src="${response.data.image_original_url}" alt="Powered by Giphy">
 						</div>
 					</div>
 				`);
+				setTimeout(main, 1000);
 			});
-			// setTimeout(nextQuestion, 5000);
 		});
 		$('.incorrect').on('click', function() {
+			incorrectAnswers++;
+			clearInterval(interval);
 			$.ajax({
-				url: `http://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=${response.results[randomQuestion].question}+${correctAnswer}`,
+				url: `http://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=funny+${response.results[randomQuestion].question}+${correctAnswer}`,
 				method: 'GET'
 			}).done(function(response) {
 				$('#stuff').html(`
 					<div id="info" class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div id="time" class="row">
-							<h2>Time Remaining: <span id="timer">TIME LEFT</span> Seconds</h2>
+							<h2>Time Remaining: <span id="secs">${number}</span> Seconds</h2>
 						</div>
 						<div id="question" class="row">
 							<h2>INCORRECT! The correct answer is ${correctAnswer}.</h2>
@@ -171,12 +232,12 @@ function main() {
 					</div>
 					<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="row">
-							<div><img src="${response.data.image_original_url}" alt="Powered by Giphy"></div>
+							<img id="gif" src="${response.data.image_original_url}" alt="Powered by Giphy">
 						</div>
 					</div>
 				`);
+				setTimeout(main, 1000);
 			});
-			// setTimeout(nextQuestion, 5000);
 		});
 	});
 }

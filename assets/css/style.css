@@ -1,9 +1,11 @@
 .container-fluid {
-	background-image: url("../images/b257aee9-1ccc-4a68-8361-17bd39a3a787.jpg");
+	background-image: url("../images/N0012328051--73446.jpg");
+	background-position: center;
+	background-size: cover;
 }
 
 #centerbox {
-	background-color: #0bb9fe;
+	background-color: white;
 	border: 2px solid black;
 	text-align: center;
 	float: none;
@@ -11,6 +13,10 @@
 	margin-bottom: 2%;
 	font-family: "Comic Sans MS";
 	padding-bottom: 1%;
+}
+
+#banner {
+	max-width: 100%;
 }
 
 /* #stuff {
@@ -29,7 +35,10 @@
 	height: 100%;
 }
 
-
+#gif {
+	max-height: 100%;
+	max-width: 100%;
+}
 
 /* to make the background extend all the way _____________________________________________________________________________________________________ */
 

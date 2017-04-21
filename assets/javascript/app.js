@@ -25,10 +25,6 @@ function shuffle(array) {
 }
 
 function main() {
-
-	jeopardy.pause();
-	jeopardy.currentTime = 0;
-
 	var numberOfQuestions = correctAnswers + incorrectAnswers + unanswered;
 	console.log(numberOfQuestions);
 	if (numberOfQuestions == 15) {
@@ -75,7 +71,7 @@ function main() {
 
 		shuffle(answers);
 
-		var number = 32;
+		var number = 30;
 		var interval = setInterval(function() {
 			number--;
 			$('#secs').text(number);
@@ -103,13 +99,12 @@ function main() {
 							</div>
 						</div>
 					`);
-					setTimeout(main, 7500);
+					setTimeout(main, 5000);
 				});
 			}
 		}, 1000);
 
 		if (response.results[randomQuestion].type == 'multiple') {
-			jeopardy.play();
 			$('#stuff').html(`
 				<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
 					<div class="row">
@@ -136,7 +131,6 @@ function main() {
 			`);
 		}
 		else if (response.results[randomQuestion].type == 'boolean') {
-			jeopardy.play();
 			if (answers[0] == 'True') {
 				$('#stuff').html(`
 					<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -223,7 +217,7 @@ function main() {
 						</div>
 					</div>
 				`);
-				setTimeout(main, 7500);
+				setTimeout(main, 5000);
 			});
 		});
 		$('.incorrect').on('click', function() {
@@ -250,7 +244,7 @@ function main() {
 						</div>
 					</div>
 				`);
-				setTimeout(main, 7500);
+				setTimeout(main, 5000);
 			});
 		});
 	});

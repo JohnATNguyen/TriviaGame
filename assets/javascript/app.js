@@ -56,7 +56,7 @@ function main() {
 	}
 
 	var answers = [];
-	var randomQuestion = 0; // or Math.floor(Math.random() * 50), changing the number in the opentdb url below to 50;
+	var randomQuestion = 0; // or Math.floor(Math.random() * 50), changing the number in the opentdb url below to 50 as well;
 
 	$.ajax({
 		url: 'https://opentdb.com/api.php?amount=1',
@@ -71,7 +71,7 @@ function main() {
 
 		shuffle(answers);
 
-		var number = 33;
+		var number = 32;
 		var interval = setInterval(function() {
 			number--;
 			$('#secs').text(number);

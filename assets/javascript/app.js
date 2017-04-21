@@ -79,7 +79,7 @@ function main() {
 				unanswered++;
 				clearInterval(interval);
 				$.ajax({
-					url: `http://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=funny+${response.results[randomQuestion].question}+${correctAnswer}`,
+					url: `https://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=funny+${response.results[randomQuestion].question}+${correctAnswer}`,
 					method: 'GET'
 				}).done(function(response) {
 					$('#stuff').html(`
@@ -199,7 +199,7 @@ function main() {
 			jeopardy.currentTime = 0;
 			clearInterval(interval);
 			$.ajax({
-				url: `http://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=funny+${response.results[randomQuestion].question}+${correctAnswer}`,
+				url: `https://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=funny+${response.results[randomQuestion].question}+${correctAnswer}`,
 				method: 'GET'
 			}).done(function(response) {
 				$('#stuff').html(`
@@ -226,7 +226,7 @@ function main() {
 			jeopardy.currentTime = 0;
 			clearInterval(interval);
 			$.ajax({
-				url: `http://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=funny+${response.results[randomQuestion].question}+${correctAnswer}`,
+				url: `https://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=funny+${response.results[randomQuestion].question}+${correctAnswer}`,
 				method: 'GET'
 			}).done(function(response) {
 				$('#stuff').html(`

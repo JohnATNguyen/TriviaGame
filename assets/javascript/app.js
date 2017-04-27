@@ -84,7 +84,7 @@ function main() {
 				clearInterval(interval);
 				if (response.results[randomQuestion].type == 'boolean') {
 					$.ajax({
-						url: `https://api.giphy.com/v1/gifs/search?api_key=dc6zaTOxFJmzC&q=${response.results[randomQuestion].question.replace(/ /g, '+')}+${correctAnswer.replace(/ /g, '+')}`,
+						url: `https://api.giphy.com/v1/gifs/search?api_key=dc6zaTOxFJmzC&q=${response.results[randomQuestion].question.replace(/ /g, '+')}`,
 						method: 'GET'
 					}).done(function(response) {
 						$('#stuff').html(`
@@ -225,7 +225,7 @@ function main() {
 			clearInterval(interval);
 			if (response.results[randomQuestion].type == 'boolean') {
 				$.ajax({
-					url: `https://api.giphy.com/v1/gifs/search?api_key=dc6zaTOxFJmzC&q=${response.results[randomQuestion].question.replace(/ /g, '+')}+${correctAnswer.replace(/ /g, '+')}`,
+					url: `https://api.giphy.com/v1/gifs/search?api_key=dc6zaTOxFJmzC&q=${response.results[randomQuestion].question.replace(/ /g, '+')}`,
 					method: 'GET'
 				}).done(function(response) {
 					$('#stuff').html(`
@@ -275,7 +275,7 @@ function main() {
 			clearInterval(interval);
 			if (response.results[randomQuestion].type == 'boolean') {
 				$.ajax({
-					url: `https://api.giphy.com/v1/gifs/search?api_key=dc6zaTOxFJmzC&q=${response.results[randomQuestion].question.replace(/ /g, '+')}+${correctAnswer.replace(/ /g, '+')}`,
+					url: `https://api.giphy.com/v1/gifs/search?api_key=dc6zaTOxFJmzC&q=${response.results[randomQuestion].question.replace(/ /g, '+')}`,
 					method: 'GET'
 				}).done(function(response) {
 					$('#stuff').html(`

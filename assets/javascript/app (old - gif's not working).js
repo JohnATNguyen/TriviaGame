@@ -1,7 +1,3 @@
-// BACKUP (for Giphy search string, to add in the question into the tag): ${response.results[randomQuestion].question.replace(/ /g, '+')}+
-
-
-
 var correctAnswers = 0;
 var incorrectAnswers = 0;
 var unanswered = 0;
@@ -81,53 +77,30 @@ function main() {
 			$('#secs').text(number);
 			if (number == 0) {
 				unanswered++;
+				jeopardy.pause();
+				jeopardy.currentTime = 0;
 				clearInterval(interval);
-				if (response.results[randomQuestion].type == 'boolean') {
-					$.ajax({
-						url: `https://api.giphy.com/v1/gifs/search?api_key=dc6zaTOxFJmzC&q=${response.results[randomQuestion].question.replace(/ /g, '+')}+${correctAnswer.replace(/ /g, '+')}`,
-						method: 'GET'
-					}).done(function(response) {
-						$('#stuff').html(`
-							<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
-								<div class="row">
-									<h2>Time Remaining: <span id="secs">${number}</span> Seconds</h2>
-								</div>
-								<div class="row">
-									<h2>TIME'S UP! The correct answer is ${correctAnswer}.</h2>
-								</div>
+				$.ajax({
+					url: `https://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=funny+${response.results[randomQuestion].question}+${correctAnswer}`,
+					method: 'GET'
+				}).done(function(response) {
+					$('#stuff').html(`
+						<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+							<div class="row">
+								<h2>Time Remaining: <span id="secs">${number}</span> Seconds</h2>
 							</div>
-							<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
-								<div class="row">
-									<img id="gif" src="${response.data[0].images.original.url}" alt="Powered by Giphy">
-								</div>
+							<div class="row">
+								<h2>TIME'S UP! The correct answer is ${correctAnswer}.</h2>
 							</div>
-						`);
-						setTimeout(main, 5000);
-					});
-				}
-				else if (response.results[randomQuestion].type == 'multiple') {
-					$.ajax({
-						url: `https://api.giphy.com/v1/gifs/search?api_key=dc6zaTOxFJmzC&q=${correctAnswer.replace(/ /g, '+')}`,
-						method: 'GET'
-					}).done(function(response) {
-						$('#stuff').html(`
-							<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
-								<div class="row">
-									<h2>Time Remaining: <span id="secs">${number}</span> Seconds</h2>
-								</div>
-								<div class="row">
-									<h2>TIME'S UP! The correct answer is ${correctAnswer}.</h2>
-								</div>
+						</div>
+						<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+							<div class="row">
+								<img id="gif" src="${response.data.image_original_url}" alt="${response.data.caption}>
 							</div>
-							<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
-								<div class="row">
-									<img id="gif" src="${response.data[0].images.original.url}" alt="Powered by Giphy">
-								</div>
-							</div>
-						`);
-						setTimeout(main, 5000);
-					});
-				}
+						</div>
+					`);
+					setTimeout(main, 5000);
+				});
 			}
 		}, 1000);
 
@@ -222,103 +195,57 @@ function main() {
 
 		$('.correct').on('click', function() {
 			correctAnswers++;
+			jeopardy.pause();
+			jeopardy.currentTime = 0;
 			clearInterval(interval);
-			if (response.results[randomQuestion].type == 'boolean') {
-				$.ajax({
-					url: `https://api.giphy.com/v1/gifs/search?api_key=dc6zaTOxFJmzC&q=${response.results[randomQuestion].question.replace(/ /g, '+')}+${correctAnswer.replace(/ /g, '+')}`,
-					method: 'GET'
-				}).done(function(response) {
-					$('#stuff').html(`
-						<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
-							<div class="row">
-								<h2>Time Remaining: <span id="secs">${number}</span> Seconds</h2>
-							</div>
-							<div class="row">
-								<h2>CORRECT!</h2>
-							</div>
+			$.ajax({
+				url: `https://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=funny+${response.results[randomQuestion].question}+${correctAnswer}`,
+				method: 'GET'
+			}).done(function(response) {
+				$('#stuff').html(`
+					<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+						<div class="row">
+							<h2>Time Remaining: <span id="secs">${number}</span> Seconds</h2>
 						</div>
-						<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
-							<div class="row">
-								<img id="gif" src="${response.data[0].images.original.url}" alt="Powered by Giphy">
-							</div>
+						<div class="row">
+							<h2>CORRECT!</h2>
 						</div>
-					`);
-					setTimeout(main, 5000);
-				});
-			}
-			else if (response.results[randomQuestion].type == 'multiple') {
-				$.ajax({
-					url: `https://api.giphy.com/v1/gifs/search?api_key=dc6zaTOxFJmzC&q=${correctAnswer.replace(/ /g, '+')}`,
-					method: 'GET'
-				}).done(function(response) {
-					$('#stuff').html(`
-						<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
-							<div class="row">
-								<h2>Time Remaining: <span id="secs">${number}</span> Seconds</h2>
-							</div>
-							<div class="row">
-								<h2>CORRECT!</h2>
-							</div>
+					</div>
+					<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+						<div class="row">
+							<img id="gif" src="${response.data.image_original_url}" alt="${response.data.caption}>
 						</div>
-						<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
-							<div class="row">
-								<img id="gif" src="${response.data[0].images.original.url}" alt="Powered by Giphy">
-							</div>
-						</div>
-					`);
-					setTimeout(main, 5000);
-				});
-			}	
+					</div>
+				`);
+				setTimeout(main, 5000);
+			});
 		});
 		$('.incorrect').on('click', function() {
 			incorrectAnswers++;
+			jeopardy.pause();
+			jeopardy.currentTime = 0;
 			clearInterval(interval);
-			if (response.results[randomQuestion].type == 'boolean') {
-				$.ajax({
-					url: `https://api.giphy.com/v1/gifs/search?api_key=dc6zaTOxFJmzC&q=${response.results[randomQuestion].question.replace(/ /g, '+')}+${correctAnswer.replace(/ /g, '+')}`,
-					method: 'GET'
-				}).done(function(response) {
-					$('#stuff').html(`
-						<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
-							<div class="row">
-								<h2>Time Remaining: <span id="secs">${number}</span> Seconds</h2>
-							</div>
-							<div class="row">
-								<h2>INCORRECT! The correct answer is ${correctAnswer}.</h2>
-							</div>
+			$.ajax({
+				url: `https://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=funny+${response.results[randomQuestion].question}+${correctAnswer}`,
+				method: 'GET'
+			}).done(function(response) {
+				$('#stuff').html(`
+					<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+						<div class="row">
+							<h2>Time Remaining: <span id="secs">${number}</span> Seconds</h2>
 						</div>
-						<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
-							<div class="row">
-								<img id="gif" src="${response.data[0].images.original.url}" alt="Powered by Giphy">
-							</div>
+						<div class="row">
+							<h2>INCORRECT! The correct answer is ${correctAnswer}.</h2>
 						</div>
-					`);
-					setTimeout(main, 5000);
-				});
-			}
-			else if (response.results[randomQuestion].type == 'multiple') {
-				$.ajax({
-					url: `https://api.giphy.com/v1/gifs/search?api_key=dc6zaTOxFJmzC&q=${correctAnswer.replace(/ /g, '+')}`,
-					method: 'GET'
-				}).done(function(response) {
-					$('#stuff').html(`
-						<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
-							<div class="row">
-								<h2>Time Remaining: <span id="secs">${number}</span> Seconds</h2>
-							</div>
-							<div class="row">
-								<h2>INCORRECT! The correct answer is ${correctAnswer}.</h2>
-							</div>
+					</div>
+					<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+						<div class="row">
+							<img id="gif" src="${response.data.image_original_url}" alt="${response.data.caption}>
 						</div>
-						<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
-							<div class="row">
-								<img id="gif" src="${response.data[0].images.original.url}" alt="Powered by Giphy">
-							</div>
-						</div>
-					`);
-					setTimeout(main, 5000);
-				});
-			} 
+					</div>
+				`);
+				setTimeout(main, 5000);
+			});
 		});
 	});
 }
